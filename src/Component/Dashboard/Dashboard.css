@@ -1,0 +1,160 @@
+*{
+    font-family: "Poppins", sans-serif;
+}
+.dashboard-container{
+    padding-left: 20px;
+    padding-right: 20px;
+    width: 255px;
+    height: calc(100vh - 1px);
+    /* border: 2px solid; */
+    /* border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    /* margin-left: 5px; */
+    /* margin-top: 5px; */
+    background-color: #FAFAFA ;
+    color: #140E32;
+    font-family: "Poppins", sans-serif;
+    transition: all 700ms ease-in-out;
+    position: relative;
+    left: 0;
+    z-index: 20;
+     box-shadow: 0 0 0 0.5px #827f7f;
+}
+
+/* Dashboard TOP */
+/* .dashboard-Drop{
+    position: relative;
+    left: -100%;
+    transition: all 700ms ease-in-out;
+    padding: 20px;
+    width: 20%;
+    height: calc(100vh - 42px);
+     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+        background-color: #324862;
+    color: #e0e1dd;
+    font-family: "Poppins", sans-serif;
+    z-index: 20;
+} */
+.dashboard-top{
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    /* margin-bottom:20px; */
+    height: 85px;
+}
+.dashboard-logo-title{
+    display: flex;
+    /* gap: 0.5em; */
+    align-items: center;
+    
+}
+.dashboard-logo{
+    height: 42px;
+    padding-bottom: 10px;
+
+    /* width: px; */
+    /* background-color: #415a77; */
+    /* border-radius: 50%; */
+    /* background-color: #cacfd6; */
+}
+.dashboard-title{
+    padding-top: 9px;
+    font-weight: bold;
+    font-size: 25.3px;
+    letter-spacing: 2px;
+}
+.dashboard-dropdown{
+    cursor: pointer;
+}
+.dashboard-line{
+    height:0.5px;
+    width:100%;
+    margin: 15px;
+    margin-left: 0px;
+    border-radius: 8px;
+    background-color: #140E32;
+}
+
+/* Dashboard MENUS CENTER */
+.dashboard-center{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    height: 280px;
+    /* justify-content: center; */
+    /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
+    font-size: 15px;
+}
+.dashboard-menu{
+    display: flex;
+    gap: 0.8rem;
+    font-weight:300;
+    /* font-size: 18px; */
+    font-family: "Poppins", sans-serif;
+}
+.dashboard-menu:hover{
+    text-decoration: underline;
+}
+
+
+.dashboard-bottom{
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    font-size: 18px;
+}
+.dashboard-profile{
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+.dashboard-profile-image {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  border: 1px solid white;
+  overflow: hidden; /* Important to clip overflow */
+  background-color: white;
+  /* display: flex;
+  flex-direction: column; */
+}
+.dashboard-profile-username{
+    color: red;
+}
+.dashboard-logout{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    /* padding-left: 15px; */
+    padding-right: 15px;
+    /* background-color: #FF0033; */
+    border: 0px;
+    width: auto;
+    height: 4rem;
+    color: #140E32;
+    text-decoration: none;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    /* justify-content: center; */
+}
+.dashboard-logout:hover{
+    color: red;
+    
+}
+.dashboard-logout i{
+    margin-right: 10px;
+}
+.dashboard-menu Link{
+    text-decoration: none;
+    color: #140E32;
+}
+.hidden{
+    display: none !important;
+}

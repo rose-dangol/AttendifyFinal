@@ -16,6 +16,16 @@ const StudentHomepage = () => {
   const [user,setUser]=useState();
   const[count,setCount]=useState(1);
   const userData = JSON.parse(localStorage.getItem("userData"));
+  console.log(userData);
+  useEffect(()=>{
+    const fetchupdatedUser = async()=>{
+      const updatedUserRes = await axios.get(
+        `http://localhost:5000/user/${userData._id}`
+      );
+      localStorage.setItem("userData", JSON.stringify(updatedUserRes.data));
+    }
+    fetchupdatedUser();
+  },[])
 useEffect(() => {
   const updateAt8AM = () => {
     setCount(prev => prev + 1);
@@ -23,11 +33,9 @@ useEffect(() => {
     const next8AM = new Date();
     next8AM.setDate(now.getDate() + 1);
     next8AM.setHours(8, 0, 0, 0);
-    const msUntilNext8AM = next8AM.getTime() - now.getTime();
+    const msUntilNext8AM = next8AM.getTime() - now.getTime(); 
     timeout = setTimeout(updateAt8AM, msUntilNext8AM);
   };
-
-
   const now = new Date();
   const next8AM = new Date();
   next8AM.setHours(8, 0, 0, 0);
@@ -58,7 +66,7 @@ useEffect(() => {
       <div className="cards-row">
         <StatusCard
           title="Today's Status"
-          subtitle={user?.[0]?.status}
+          subtitle={user ? user[0].status : "Loading"} 
           extra={date}
           tag="On Time"
         />

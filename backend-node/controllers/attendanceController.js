@@ -80,9 +80,9 @@ export const fetchTodayAttendanceID = async (req, res) => {
       return res.status(404).send("user not found")
     }
     const now = new Date();
-    const todayAttendance = user.filter((user) => {
+    const todayAttendance = user.filter((user) => { //user1 1 ,user2 4,user3 10,user4 3
       const date = new Date(user.date);
-      return date.getDate() === now.getDate()&&user.status==="Present";
+      return date.getDate() === now.getDate();
     });
     return res.status(200).json(todayAttendance);
   } catch (err) {

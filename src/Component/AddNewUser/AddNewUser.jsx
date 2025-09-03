@@ -12,26 +12,50 @@ import BadgeOutlinedIcon from "@mui/icons-material/BadgeOutlined";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
-import MiscellaneousServicesOutlinedIcon from '@mui/icons-material/MiscellaneousServicesOutlined';
+import MiscellaneousServicesOutlinedIcon from "@mui/icons-material/MiscellaneousServicesOutlined";
 
 const AddNewUser = () => {
   const handleSubmit = async (e) => {
-    try{
+    try {
       e.preventDefault();
       const formData = new FormData(e.target);
       const userData = {
-          fullName: formData.get("fullName"),
-          username: formData.get("username"),
-          email: formData.get("email"),
-          password: formData.get("password"),
-          role: formData.get("role"),
-        };
-      const response = await axios.post("http://localhost:5000/api/auth/addNewUser", userData);
+        fullName: formData.get("fullName"),
+        username: formData.get("username"),
+        email: formData.get("email"),
+        password: formData.get("password"),
+        role: formData.get("role"),
+      };
+      const capture_face = {
+        person_name: formData.get("username"),
+      };
+      const preprocess = {
+        dataset_path: "dataset",
+        processed_path: "processed_dataset",
+      };
+      const lpb = {
+        processed_path: "processed_dataset",
+        lbp_path: "lbp_dataset",
+      };
+      const histogram = {
+        lbp_path: "lbp_dataset",
+        features_path: "features",
+      };
+      const trainer = {
+        features_path: "features/features.npy",
+        labels_path: "features/labels.npy",
+        person_names_path: "features/person_names.pkl",
+        model_path: "models/lbph_model.pkl",
+      };
+      await axios.post("http://localhost:5000/api/auth/addNewUser", userData);
+      await axios.post("http://127.0.0.1:5000/capture", capture_face);
+      await axios.post("http://127.0.0.1:5000/preprocess", preprocess);
+      await axios.post("http://127.0.0.1:5000/compute_lbp", lpb);
+      await axios.post("http://127.0.0.1:5000/extract_features", histogram);
+      await axios.post("http://127.0.0.1:5000/create_model", trainer);
       alert("User added successfully!");
-      console.log(response.data);
       e.target.reset(); // Resets the form
-
-    }catch (error) {
+    } catch (error) {
       console.error("Error adding new user:", error);
       alert("Failed to add new user. Please try again.");
     }
@@ -76,7 +100,10 @@ const AddNewUser = () => {
                   Fill in the details below to register a user in the system
                 </span>
               </div>
-              <form className="add-new-user-formInputs" onSubmit={(e) => handleSubmit(e)}>
+              <form
+                className="add-new-user-formInputs"
+                onSubmit={(e) => handleSubmit(e)}
+              >
                 <div className="form-row">
                   <div className="form-inputLabel half-width">
                     <div className="label-icon">
@@ -143,7 +170,9 @@ const AddNewUser = () => {
                     className="add-new-user-input role-input"
                     required
                   >
-                    <option value="" disabled selected>Select Role</option>
+                    <option value="" disabled selected>
+                      Select Role
+                    </option>
                     <option value="student">Student</option>
                     <option value="teacher">Teacher</option>
                   </select>
@@ -154,7 +183,10 @@ const AddNewUser = () => {
                     <PersonAddAltIcon />
                     <span>Create User</span>
                   </button>
-                  <button className="add-new-user-cancelButton" onClick={(e) => handleClear(e)}>
+                  <button
+                    className="add-new-user-cancelButton"
+                    onClick={(e) => handleClear(e)}
+                  >
                     <ClearOutlinedIcon />
                     Clear Form
                   </button>

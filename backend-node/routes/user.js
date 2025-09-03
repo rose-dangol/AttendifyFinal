@@ -1,9 +1,10 @@
 
 import express from "express";
-import { getAllStudent } from "../controllers/userController.js";
+import { getAllStudent, getuserbyId } from "../controllers/userController.js";
 import axios from "axios";
 const router = express.Router();
 router.get("/getAll", getAllStudent);
+router.get("/:userID", getuserbyId)
 
 
 

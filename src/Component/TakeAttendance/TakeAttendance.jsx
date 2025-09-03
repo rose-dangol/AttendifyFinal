@@ -14,9 +14,10 @@ const TakeAttendance = () => {
   const [clicked, setClicked] = useState(false);
   let attendanceRecords =
     JSON.parse(localStorage.getItem("attendanceRecords")) || {};
-  const [status, setStatus] = useState("Absent");
+  const [status, setStatus] = useState("");
 
   const userData = JSON.parse(localStorage.getItem("userData"));
+  // 8 to 10 am samman matra click garna milni
   useEffect(() => {
     const checkTime = () => {
       const now = new Date();
@@ -34,6 +35,8 @@ const TakeAttendance = () => {
     return () => clearInterval(interval);
   }, []);
 
+  //everyday 10 am samman take attendance vutton click garena vane absent janxa
+
 useEffect(() => {
   const checkAbsent = () => {
     const now = new Date();
@@ -41,19 +44,30 @@ useEffect(() => {
       now.getFullYear(),
       now.getMonth(),
       now.getDate(),
-      10, 0, 0, 0
+      10,
+      0,
+      0,
+      0
     );
 
-    if (!clicked && now >= today10AM) {
-      updateStatus("Absent");
-      setClicked(true); 
+    if (now >= today10AM) {
+      // Check if user already has attendance for today
+      const checkExistingAttendance = async () => {
+        try {
+          const res = await axios.get(`http://localhost:5000/attendance/todayAttendance/${userData._id}`);
+          if (res.data.length === 0) { // No attendance record for today
+            updateStatus("Absent");
+          }
+        } catch (err) {
+          console.error("Error checking attendance:", err);
+        }
+      };
+      checkExistingAttendance();
     }
   };
-  checkAbsent();
-  const interval = setInterval(checkAbsent, 60000); 
-  return () => clearInterval(interval);
-}, [clicked]);
 
+  checkAbsent();
+}, []);
 
   useEffect(() => {
     const checkCamera = async () => {
@@ -75,64 +89,108 @@ useEffect(() => {
   const videoRef = useRef(null);
   const [cameraStarted, setCameraStarted] = useState(false);
 
-  const handleTakeAttendanceClick = async () => {
-    console.log(cameraStarted);
-
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-
-      if (videoRef?.current) {
-        videoRef.current.srcObject = stream;
-        setCameraStarted(true);
-        console.log(cameraStarted);
-        console.log("hello camera");
-      }
-    } catch (error) {
-      console.error("Camera access error:", error);
-      alert("Unable to access camera.");
-    }
-  };
   const updateStatus = async (newStatus) => {
     setStatus(newStatus);
     const data = {
       userId: userData._id,
       Status: newStatus,
     };
+    const data2 = {
+      state: "Known",
+    };
 
     try {
-      await axios.post("http://localhost:5000/attendance/takeAttendance", data);
+      const res = await axios.post("http://127.0.0.1:5000/recognize", data2); //python recognizer chalyo
+      console.log(res.data);
+      if (res?.data?.detected_name === userData?.username) {
+        await axios.post(
+          "http://localhost:5000/attendance/takeAttendance", // node backend ma present vayo
+          data
+        );
+        
+        alert("Attendance marked as Present");
+      } else {
+        
+        alert(
+          "logged in user and the person in front of camera does not match"
+        );
+        return;
+      }
     } catch (err) {
       console.error("Error updating status:", err);
     }
   };
+  const updateStatus1 = async () => {
+    const data2 = {
+      state: "Unknown",
+    };
+    try {
+      await axios.post("http://127.0.0.1:5000/recognize", data2);
+      alert("Unregistered User!");
+    } catch (err) {
+      console.error("Error updating status:", err);
+    }
+  };
+  const handleTakeAttendanceClick = async () => {
+    const now = Date.now(); //aaile ko date
+    if (!userData || !userData._id) {
+      alert("User data not found. Please log in again.");
+      return;
+    }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    if (attendanceRecords[userData._id]) {
+      const lastClicked = new Date(attendanceRecords[userData._id]);
+      const lastDate = lastClicked.toDateString();
+      const todayDate = new Date().toDateString();
+      // if (lastDate === todayDate) {
+      //   alert("You can only take attendance once per day");
+      //   return;
+      // }
+    }
+    attendanceRecords[userData._id] = now; //attendanceRecord[tony] = 9/3/2025
+    localStorage.setItem(
+      "attendanceRecords",
+      JSON.stringify(attendanceRecords)
+    );
+    await updateStatus("Present");
+    setClicked(true);
+  };
+  const handleSubmit2 = async () => {
+    console.log("Unknown");
     const now = Date.now();
 
     if (attendanceRecords[userData._id]) {
       const lastClicked = new Date(attendanceRecords[userData._id]);
       const lastDate = lastClicked.toDateString();
       const todayDate = new Date().toDateString();
-      if (lastDate === todayDate) {
-        alert("You can only take attendance once per day");
-        return;
-      }
+      // if (lastDate === todayDate) {
+      //   alert("You can only take attendance once per day");
+      //   return;
+      // }
     }
     attendanceRecords[userData._id] = now;
     localStorage.setItem(
       "attendanceRecords",
       JSON.stringify(attendanceRecords)
     );
-    await updateStatus("Present");
-    setClicked(true); 
-    alert("Attendance marked as Present");
+    await updateStatus1("Present");
+    setClicked(true);
   };
+
   return (
     <div>
       <div className="take-attendance-container">
         <Dashboard />
         <div className="main-content">
+          <div>
+            <button
+              className="take-atten-2"
+              disabled={!isAllowed}
+              onClick={() => handleSubmit2()}
+            >
+              tendace
+            </button>
+          </div>
           <div className="top-bar">
             <div className="top-bar-title">
               <span className="section-heading">AI Attendance System</span>
@@ -169,10 +227,24 @@ useEffect(() => {
                 <div
                   className="take-attendance-btn"
                   style={{ display: cameraStarted ? "none" : "flex" }}
-                  onClick={handleTakeAttendanceClick}
                 >
-                  <CameraEnhanceOutlinedIcon sx={{ fontSize: 28 }} /> Take
-                  Attendance
+                  <CameraEnhanceOutlinedIcon sx={{ fontSize: 28 }} />
+
+                  <button
+                    style={{
+                      backgroundColor: "#061536",
+                      outline: "0px",
+                      color: " #b9c4d4",
+                      cursor: "pointer",
+                      padding: "0px",
+                      border: "0px",
+                      fontSize: "16px",
+                    }}
+                    onClick={() => handleTakeAttendanceClick()}
+                    disabled={!isAllowed}
+                  >
+                    Take Attendance
+                  </button>
                 </div>
                 {/* Camera preview */}
                 <video
@@ -223,9 +295,6 @@ useEffect(() => {
                 </div>
                 {/* <div className="gmail typing-text typing-delay-2">Email: rose@gmail.com</div>
                 <div className="userid typing-text typing-delay-3">User ID: 28684</div> */}
-                <form onSubmit={(e) => handleSubmit(e)}>
-                  <button disabled={!isAllowed}>Take Attendance</button>
-                </form>
               </div>
             </div>
           </div>

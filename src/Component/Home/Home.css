@@ -42,12 +42,13 @@ body{
     gap: 4rem;
     margin-left: 30px;
     margin-top: 60px;
-    justify-content: start;
+    justify-content: space-evenly;
+
     
 }
 .stats-box{
-    width: 232px;
-    height: 180px;
+    width: 252px;
+    height: 200px;
     background-color: #FAFAFA;
     border-radius: 10px;
     align-content: center;

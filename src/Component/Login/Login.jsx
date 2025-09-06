@@ -39,6 +39,7 @@ const Login = () => {
         "http://localhost:5000/api/auth/login",
         loginData
       );
+      console.log(res.data)
       try {
         const userData = JSON.stringify(res.data); // now it's initialized
         localStorage.setItem("userData", userData);
@@ -50,7 +51,7 @@ const Login = () => {
         console.log(e);
       }
     } catch (error) {
-      console.log(error.message);
+      alert(error.response.data);
     }
   };
   return (

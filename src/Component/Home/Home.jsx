@@ -130,7 +130,7 @@ const Home = () => {
               <div className="stats-box-title">Productivity</div>
             </div> */}
           </div>
-          <div className="center-bargraph"></div>
+          {/* <div className="center-bargraph"><img src="/images/admin-home.png" style={{width:"auto", height:"200px"}}></img></div> */}
         </div>
       </div>
     </div>):<StudentHomepage/>}

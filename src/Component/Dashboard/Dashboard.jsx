@@ -102,7 +102,7 @@ const Dashboard = () => {
               </div>
               <div className="dashboard-menu-data"><Link to="/" style={{ textDecoration: 'none', color: '#140E32' }}>Home</Link></div>
             </div>
-            <div className="dashboard-menu">
+            <div className={userRole.toLowerCase().includes("admin")?"hidden":"dashboard-menu"}>
               <div className="dashboard-icon">
                 <AddAPhotoIcon />
               </div>

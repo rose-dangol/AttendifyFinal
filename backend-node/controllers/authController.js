@@ -28,7 +28,7 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  console.log("Login route hit ✅");
+  console.log("Login route hit---");
   try {
     const username = req.body.username;
     const validation = await User.findOne({ username: username });
@@ -65,7 +65,7 @@ export const deleteUser = async (req, res) => {
 
 export const addNewUser = async (req, res) => {
   try {
-    console.log("🚀 addNewUser endpoint hit");
+    console.log("--addNewUser endpoint hit");
     const { fullName, email, username, password, role } = req.body;
     const repeatedUsername = await User.findOne({ username });
     if (repeatedUsername) {

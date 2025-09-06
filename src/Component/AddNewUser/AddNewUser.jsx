@@ -174,7 +174,7 @@ const AddNewUser = () => {
                       Select Role
                     </option>
                     <option value="student">Student</option>
-                    <option value="teacher">Teacher</option>
+                    {/* <option value="teacher">Teacher</option> */}
                   </select>
                 </div>
 

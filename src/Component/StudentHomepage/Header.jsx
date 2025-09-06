@@ -22,7 +22,7 @@ const Header = () => {
   return (
     <div className="header">
       <div className="user-info">
-        <img src="/images/userProfile.jpg" alt="profile" className="avatar" />
+        <img src="/images/userProfile.jpeg" alt="profile" className="avatar" />
         <div>
           <h2>Welcome, {userData.fullName}</h2>
           <p>Hope you're having a productive day!</p>

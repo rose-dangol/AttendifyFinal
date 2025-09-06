@@ -58,9 +58,9 @@ const Home = () => {
         <TopNavbar />
         <div className="home-center-content">
           <div className="center-heading">
-            <h2>Dashboard Overview</h2>
+            <h2>Admin Dashboard Overview</h2>
             <p>
-              Welcome Back! Here's what's happening today with your schedule.
+              Welcome, {userData.username}! Here's what's happening today. 
             </p>
           </div>
           {/* 192 x140 */}
@@ -113,7 +113,7 @@ const Home = () => {
               <div className="stats-box-number">{absentCount.length}</div>
               <div className="stats-box-title" onClick={()=>navigate("/LeaveUser")}>Absent Students</div>
             </div>
-            <div className="stats-box">
+            {/* <div className="stats-box">
               <div className="stats-box-icon">
                 <AutoGraphIcon
                   sx={{
@@ -128,7 +128,7 @@ const Home = () => {
               </div>
               <div className="stats-box-number">88%</div>
               <div className="stats-box-title">Productivity</div>
-            </div>
+            </div> */}
           </div>
           <div className="center-bargraph"></div>
         </div>

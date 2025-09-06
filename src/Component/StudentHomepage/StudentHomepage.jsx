@@ -14,7 +14,7 @@ import attendance from "../../../backend-node/models/attendance";
 
 const StudentHomepage = () => {
   const [user,setUser]=useState();
-  const[count,setCount]=useState(1);
+  const[count,setCount]=useState(5);
   const userData = JSON.parse(localStorage.getItem("userData"));
   console.log(userData);
   useEffect(()=>{
@@ -66,21 +66,22 @@ useEffect(() => {
       <div className="cards-row">
         <StatusCard
           title="Today's Status"
-          subtitle={user ? user[0].status : "Loading"} 
+          subtitle={user==null||undefined? "Today Attendace Not Taken Yet" : user[0]?.status} 
           extra={date}
-          tag="On Time"
+          tag=""
         />
         <StatusCard
           title="This Week"
           subtitle={`${userData?.presentCountWeek}/${count>7?0:count} days`}
           extra={`${Math.floor((userData?.presentCountWeek / count) * 100)}% attendance rate`}
-          tag="Alert"
+          tag=""
         />
         <StatusCard
           title="This Month"
-          subtitle={`${userData?.presentCountWeek}/${count>30?0:count}  days`}
+          // subtitle={`${userData?.presentCountMonth}/${count>30?0:count}  days`} 
+          subtitle={`${userData?.presentCountMonth}/25  days`}   //
           extra={`${Math.floor((userData?.presentCountMonth / count) * 100)>50?"Your performance is good":"Your performance is not sastisfactory"}`}
-          tag="On Time"
+          tag=""
         />
       </div>
 

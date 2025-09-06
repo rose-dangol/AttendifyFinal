@@ -17,6 +17,7 @@ const TakeAttendance = () => {
   const [status, setStatus] = useState("");
 
   const userData = JSON.parse(localStorage.getItem("userData"));
+  
   // 8 to 10 am samman matra click garna milni
   useEffect(() => {
     const checkTime = () => {
@@ -35,7 +36,7 @@ const TakeAttendance = () => {
     return () => clearInterval(interval);
   }, []);
 
-  //everyday 10 am samman take attendance vutton click garena vane absent janxa
+//everyday 10 am samman take attendance vutton click garena vane absent janxa
 
 useEffect(() => {
   const checkAbsent = () => {
@@ -65,7 +66,7 @@ useEffect(() => {
       checkExistingAttendance();
     }
   };
-
+  
   checkAbsent();
 }, []);
 
@@ -104,7 +105,7 @@ useEffect(() => {
       console.log(res.data);
       if (res?.data?.detected_name === userData?.username) {
         await axios.post(
-          "http://localhost:5000/attendance/takeAttendance", // node backend ma present vayo
+          "http://localhost:5000/attendance/takeAttendance", // node backend ma present vayo 
           data
         );
         
@@ -120,6 +121,8 @@ useEffect(() => {
       console.error("Error updating status:", err);
     }
   };
+
+  {/* UPDATE TRY DUMMY*/}
   const updateStatus1 = async () => {
     const data2 = {
       state: "Unknown",
@@ -131,6 +134,7 @@ useEffect(() => {
       console.error("Error updating status:", err);
     }
   };
+
   const handleTakeAttendanceClick = async () => {
     const now = Date.now(); //aaile ko date
     if (!userData || !userData._id) {
@@ -142,10 +146,10 @@ useEffect(() => {
       const lastClicked = new Date(attendanceRecords[userData._id]);
       const lastDate = lastClicked.toDateString();
       const todayDate = new Date().toDateString();
-      // if (lastDate === todayDate) {
-      //   alert("You can only take attendance once per day");
-      //   return;
-      // }
+      if (lastDate === todayDate) {
+        alert("You can only take attendance once per day");
+        return;
+      }
     }
     attendanceRecords[userData._id] = now; //attendanceRecord[tony] = 9/3/2025
     localStorage.setItem(
@@ -155,6 +159,8 @@ useEffect(() => {
     await updateStatus("Present");
     setClicked(true);
   };
+
+  {/*Handle submit DUMMY*/}
   const handleSubmit2 = async () => {
     console.log("Unknown");
     const now = Date.now();
@@ -183,13 +189,14 @@ useEffect(() => {
         <Dashboard />
         <div className="main-content">
           <div>
-            <button
-              className="take-atten-2"
-              disabled={!isAllowed}
+          {/*Practice*/}
+            <button className="take-atten-2"
+              disabled={isAllowed}
               onClick={() => handleSubmit2()}
             >
               tendace
             </button>
+
           </div>
           <div className="top-bar">
             <div className="top-bar-title">
@@ -237,7 +244,7 @@ useEffect(() => {
                       color: " #b9c4d4",
                       cursor: "pointer",
                       padding: "0px",
-                      border: "0px",
+                      border: "0px",  
                       fontSize: "16px",
                     }}
                     onClick={() => handleTakeAttendanceClick()}
@@ -246,6 +253,7 @@ useEffect(() => {
                     Take Attendance
                   </button>
                 </div>
+                
                 {/* Camera preview */}
                 <video
                   ref={videoRef}

@@ -99,7 +99,7 @@ def create_model_route():
 def recognize_route():
     try:
         data = request.get_json()
-        state = data.get("status")  # Changed from "state" to "status"
+        state = data.get("state")  # Changed from "state" to "status"
         detected_name = face_recognition(state)  # Capture the return value
         return jsonify({
             'success': True,

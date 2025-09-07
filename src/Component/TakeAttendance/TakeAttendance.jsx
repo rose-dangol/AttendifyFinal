@@ -145,10 +145,10 @@ useEffect(() => {
       const lastClicked = new Date(attendanceRecords[userData._id]);
       const lastDate = lastClicked.toDateString();
       const todayDate = new Date().toDateString();
-      if (lastDate === todayDate) {
-        alert("You can only take attendance once per day");
-        return;
-      }
+      // if (lastDate === todayDate) {
+      //   alert("You can only take attendance once per day");
+      //   return;
+      // }
     }
     attendanceRecords[userData._id] = now; //attendanceRecord[tony] = 9/3/2025
     localStorage.setItem(
@@ -190,7 +190,7 @@ useEffect(() => {
           <div>
           {/*Practice*/}
             <button className="take-atten-2"
-              disabled={isAllowed}
+              // disabled={isAllowed}
               onClick={() => handleSubmit2()}
             >
               tendace

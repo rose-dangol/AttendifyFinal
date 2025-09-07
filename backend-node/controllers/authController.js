@@ -40,7 +40,7 @@ export const login = async (req, res) => {
       validation.password
     );
     if (!validpassword) {
-      return res.status(800).send("Wrong password hanis vai!!");
+      return res.status(800).send("Wrong password!!");
     }
     return res.status(200).send(validation);
   } catch (err) {

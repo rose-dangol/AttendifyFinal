@@ -32,7 +32,6 @@ const TakeAttendance = () => {
     };
     checkTime();
     const interval = setInterval(checkTime, 60000);
-
     return () => clearInterval(interval);
   }, []);
 
@@ -66,10 +65,10 @@ useEffect(() => {
       checkExistingAttendance();
     }
   };
-  
   checkAbsent();
 }, []);
 
+//for camera 
   useEffect(() => {
     const checkCamera = async () => {
       try {
@@ -86,10 +85,10 @@ useEffect(() => {
 
     checkCamera();
   }, []);
+
   // open camera
   const videoRef = useRef(null);
   const [cameraStarted, setCameraStarted] = useState(false);
-
   const updateStatus = async (newStatus) => {
     setStatus(newStatus);
     const data = {

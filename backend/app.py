@@ -30,7 +30,7 @@ def capture_route():
 @app.route('/preprocess', methods=['POST'])
 def preprocess_route():
     """
-    Optionally, you can pass JSON:
+    JSON:
     {
         "dataset_path": "dataset",
         "processed_path": "processed_dataset"

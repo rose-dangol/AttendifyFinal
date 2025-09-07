@@ -1,0 +1,5 @@
+LBPH Face Recognition Accuracy Report
+====================================
+Total Test Samples: 42
+Correct Predictions: 42
+Accuracy: 100.00%

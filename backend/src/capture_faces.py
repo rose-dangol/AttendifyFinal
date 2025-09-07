@@ -46,7 +46,9 @@ def capture_faces(person_name, dataset_path='dataset',max_images=30, camera_inde
             img_count += 1
             img_filename = os.path.join(person_path, f"img_{img_count}.jpg")
             cv2.imwrite(img_filename, face_crop)
-
+        # status_text = f"Capturing face data ({img_count}/{max_images})"
+        # cv2.putText(frame, status_text, (10, 30),
+        #             cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
         cv2.imshow('Face Capture', frame)
 
         # Break loop

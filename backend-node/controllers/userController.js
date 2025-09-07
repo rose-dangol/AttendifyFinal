@@ -21,7 +21,7 @@ export const getuserbyId = async(req,res)=>{
   }catch(err){
     return res.status(200).send(err.mmessage)
   }
-}
+};
 
 export const deleteuserbyId = async(req,res)=>{
   try{
@@ -36,4 +36,20 @@ export const deleteuserbyId = async(req,res)=>{
   } catch (err) {
     res.status(500).send("Server error");
   }
-}
+};
+
+export const updateUser = async (req, res) => {
+  try{
+    const {id}= req.params.userID;
+    const updateUser = await User.findByIdAndUpdate(
+      id, 
+      {$set:req.body},{new:true}
+    );
+    if(!updateUser){
+      return res.status(404).send("Error updating user!");
+    }
+    return res.send("User updated sucessfully!")
+  }catch(error){
+    return res.send(500).send("Error");
+  }
+};

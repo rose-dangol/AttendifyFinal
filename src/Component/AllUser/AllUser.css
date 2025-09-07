@@ -6,3 +6,8 @@
     color:white
 }
 
+.action-btns{
+    display: flex;
+    gap: 1rem;
+    margin-right: -70px;
+}

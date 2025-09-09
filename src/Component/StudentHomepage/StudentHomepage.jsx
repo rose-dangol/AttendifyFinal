@@ -14,7 +14,7 @@ import attendance from "../../../backend-node/models/attendance";
 
 const StudentHomepage = () => {
   const [user,setUser]=useState();
-  const[count,setCount]=useState(5);
+  const[count,setCount]=useState(3);
   const userData = JSON.parse(localStorage.getItem("userData"));
   console.log(userData);
   useEffect(()=>{

@@ -23,6 +23,9 @@ def capture_faces(person_name, dataset_path='dataset',max_images=30, camera_inde
     # Open webcam
     cap = cv2.VideoCapture(camera_index)
     img_count = 0
+   
+    cv2.namedWindow('Face Capture', cv2.WINDOW_NORMAL)
+    cv2.setWindowProperty('Face Capture', cv2.WND_PROP_TOPMOST, 1)
     # max_images = 30  # Number of images to capture per person
 
     print("Press 'q' to quit early.")

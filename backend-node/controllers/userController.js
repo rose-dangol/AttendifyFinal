@@ -25,15 +25,24 @@ export const getuserbyId = async(req,res)=>{
 
 export const deleteuserbyId = async(req,res)=>{
   try{
-  const { id } = req.params;
+  const id = req.params.userID;
+    // First, check if the user exists
+    const userExists = await User.findById(id);
+    
+    if (!userExists) {
+      console.log("User not found before deletion attempt for ID:", id);
+      return res.status(404).send("User not found");
+    }
+    // If user exists, then try to delete
     const user = await User.findByIdAndDelete(id);
 
     if (!user) {
-      return res.status(404).send("User not found");
+      return res.status(404).send("User not found after findByIdAndDelete");
     }
 
     res.status(200).send("User deleted successfully");
   } catch (err) {
+    console.error("Error deleting user:", err); // Log the actual error
     res.status(500).send("Server error");
   }
 };

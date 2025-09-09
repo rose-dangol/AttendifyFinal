@@ -145,6 +145,10 @@ def face_recognition(state,model_path='models/lbph_model.pkl',
 
     cap = cv2.VideoCapture(0)
     print("[INFO] Starting face recognition... Press 'q' to quit.")
+    
+    cv2.namedWindow("LBPH Face Recognition", cv2.WINDOW_NORMAL)
+    cv2.setWindowProperty("LBPH Face Recognition", cv2.WND_PROP_TOPMOST, 1)
+
     start_time = time.time()
     detected_name = "Unknown"  # Initialize detected name
 
